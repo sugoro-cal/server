@@ -1,3 +1,6 @@
 db.sqlite3
-app/migrations/
+**/migrations/
 venv/
+*.pyc
+**/__pycache__/*.pyc
+.idea/
