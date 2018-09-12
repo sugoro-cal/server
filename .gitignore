@@ -1,6 +1,11 @@
-db.sqlite3
+# migration file
 **/migrations/
+
+# venv settings
 venv/
-*.pyc
-**/__pycache__/*.pyc
-.idea/
+
+# .pyc file
+**/__pycache__/
+
+# idea settings
+.idea/*
