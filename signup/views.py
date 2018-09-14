@@ -1,17 +1,18 @@
-from django.views.generic.edit import CreateView
+from django.shortcuts import render, redirect
+from django.views.generic import CreateView
 from django.contrib.auth import login, authenticate
-from django.shortcuts import redirect, render
 
 from .forms import SignUpForm
+from users.models import User
 
 
 class SignUpView(CreateView):
+    model = User
     form_class = SignUpForm
-    template_name = 'auth_app/signup.html'
+    template_name = 'signup/signup.html'
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
-
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
@@ -19,5 +20,4 @@ class SignUpView(CreateView):
             user = authenticate(username=username, password=raw_password)
             login(request, user)
             return redirect('index')
-        return render(request, 'auth_app/signup.html', {'form': form})
-
+        return render(request, 'signup/signup.html', {'form': form})
