@@ -4,6 +4,10 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
+
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import ResizeToFill
+
 import uuid as uuid_lib
 
 
@@ -28,8 +32,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     # email
     email = models.EmailField(_('email address'), blank=True)
 
-    # bio,
+    # bio, icon
     bio = models.TextField(max_length=500, blank=True)
+    icon = ImageSpecField(source='original',
+                          processors=[ResizeToFill(250, 250)],
+                          format="JPEG",
+                          options={'quality': 60},
+                          )
+
+    original = models.ImageField(default="media/dice.png", upload_to="media/")
 
     # is staff, is active (boolean), and date joined
     is_staff = models.BooleanField(
@@ -66,6 +77,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
-
-
-# TODO 開発時ユーザーのパスワードは'goodbyee'

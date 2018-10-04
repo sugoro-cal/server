@@ -15,6 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.static import serve
+from django.conf.urls.static import static
+
+from . import settings
 
 
 urlpatterns = [
@@ -23,4 +27,8 @@ urlpatterns = [
     path('auth/', include("signup.urls")),
     path('profile/', include("users.urls")),
     path('admin/', admin.site.urls),
+    path('media/<path>', serve, {'document_root': settings.MEDIA_ROOT})
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,3 +9,6 @@ venv/
 
 # idea settings
 .idea/*
+
+# media directory
+medir/
