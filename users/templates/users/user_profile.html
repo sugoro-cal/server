@@ -8,7 +8,9 @@
     <a href="{% url "change_profile" user.pk %}">プロフィールを編集する</a>
     <main>
         <div class="box1">
-            <img src="img/icon.jpg" width="200" height="200" class="icon">
+            {% if user.original %}
+                <img src="{{ user.icon.url }}" width="200" height="200" />
+            {% endif %}
             <h1>{{ user.username }}</h1>
             <p>{{ user.bio }}</p>
         </div>

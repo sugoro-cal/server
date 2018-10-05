@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.urls import reverse_lazy
 from django.views.generic import DetailView, UpdateView
 
 from .forms import ProfileUpdateForm
@@ -25,3 +26,6 @@ class ProfileUpdateView(OnlyUserMixin, UpdateView):
     model = User
     form_class = ProfileUpdateForm
     template_name = "users/profile_update.html"
+
+    def get_success_url(self):
+        return reverse_lazy("profile", kwargs={"pk": self.request.user.pk})

@@ -5,10 +5,13 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core.mail import send_mail
 
-from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+from server import settings
+
 import uuid as uuid_lib
+import os
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -25,22 +28,27 @@ class User(AbstractBaseUser, PermissionsMixin):
         validators=[username_validator],
         error_messages={
             'unique': _("A user with that username already exists."),
-        },
+        }
     )
     full_name = models.CharField(_('氏名'), max_length=150, blank=True)
 
     # email
     email = models.EmailField(_('email address'), blank=True)
 
+    # image original
+    original = models.ImageField(
+        default=os.path.join("users", "dice.png"),
+        upload_to="media/"
+    )
+
     # bio, icon
     bio = models.TextField(max_length=500, blank=True)
-    icon = ImageSpecField(source='original',
-                          processors=[ResizeToFill(250, 250)],
-                          format="JPEG",
-                          options={'quality': 60},
-                          )
-
-    original = models.ImageField(default="media/dice.png", upload_to="media/")
+    icon = ImageSpecField(
+        source='original',
+        processors=[ResizeToFill(250, 250)],
+        format="JPEG",
+        options={'quality': 60}
+    )
 
     # is staff, is active (boolean), and date joined
     is_staff = models.BooleanField(
