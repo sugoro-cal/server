@@ -34,4 +34,15 @@ class EventRegisterForParticipateForm(forms.ModelForm):
 class ShopEntryForm(forms.ModelForm):
 
     class Mata:
-        pass
+        model = models.Event
+        fields = (
+            'delegation_name',
+            'shop_name',
+            'address',
+            'mail'
+        )
+
+
+# TODO 一般ユーザ向け参加者登録ページのフォーム
+class ParticipateEntryForm(forms.ModelForm):
+    pass

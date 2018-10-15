@@ -22,7 +22,7 @@
                     <ul>
                         {%  for event in events %}
                             <li>
-                                <a href="{% url 'event_info' event.id %}">
+                                <a href="{% url 'app:event_info' event.id %}">
                                     {{ event.event_name }}
                                 </a>
                             </li>

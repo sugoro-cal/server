@@ -38,7 +38,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         _('メールアドレス'),
         help_text='メールアドレスを入力してください',
-        blank=True
+        unique=True,
     )
 
     # image original

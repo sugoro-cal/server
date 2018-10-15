@@ -8,26 +8,6 @@ from imagekit.processors import ResizeToFill
 User = get_user_model()
 
 
-class Shop(models.Model):
-    delegation_name = models.CharField(
-        _("delegation name"),
-        max_length=31
-    )
-    shop_name = models.CharField(
-        _("shop_name"),
-        max_length=63
-    )
-    address = models.CharField(
-        _("address"),
-        max_length=63
-    )
-    mail = models.EmailField(
-        _("mail_address"),
-        blank=True
-    )
-
-
-# TODO Eventモデルの実用系を作る
 class Event(models.Model):
     # registration status
     REGISTRATION_SHOPS = "RS"
@@ -79,3 +59,27 @@ class Event(models.Model):
 
     # shops
     participating_shops_text = models.TextField(_("参加店舗一覧"), max_length=500, default="")
+
+
+class Shop(models.Model):
+    delegation_name = models.CharField(
+        _("店舗代表者名"),
+        max_length=31
+    )
+    shop_name = models.CharField(
+        _("店舗名"),
+        max_length=63
+    )
+    address = models.CharField(
+        _("店舗住所"),
+        max_length=63
+    )
+    mail = models.EmailField(
+        _("店舗メールアドレス"),
+        blank=True
+    )
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.PROTECT,
+        null=True
+    )

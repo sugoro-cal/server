@@ -44,11 +44,7 @@
                 <a href="{% url 'index' %}" id="logo">
                     <img src="{% static 'image/logo_clear_background.png' %}">
                 </a>
-                <form id="search">
-                    <!-- TODO: Django Formで置き換える-->
-                    <input type="text" >
-                    <input type="button" value="検索">
-                </form>
+                {% include 'search_form.html' %}
                 {% if user.is_authenticated %}
                     <a href="{% url 'profile' user.pk %}" id="user">
                         <img src="{{ user.icon.url }}">
@@ -76,7 +72,7 @@
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'profile' user.pk %}">profile</a></li>
                     <li><a href="{% url 'logout' %}">logout</a></li>
-                    <li><a href="{% url 'register_for_shops' %}">店舗募集用イベント登録ページ</a></li>
+                    <li><a href="{% url 'app:register_for_shops' %}">店舗募集用イベント登録ページ</a></li>
                 {% else %}
                     <li><a href="{% url 'signup' %}">signup</a></li>
                     <li><a href="{% url 'login' %}">login</a></li>

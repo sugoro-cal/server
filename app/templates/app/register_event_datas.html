@@ -9,9 +9,9 @@
         <div class="table-view">
             <form method="post" action="
                 {% if event %}
-                    {% url 'register_for_participates' event.id %}
+                    {% url 'app:register_for_participates' event.id %}
                 {% else %}
-                    {% url 'register_for_shops' %}
+                    {% url 'app:register_for_shops' %}
                 {% endif %}
             " enctype="multipart/form-data">
                 {% csrf_token %}

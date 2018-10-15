@@ -52,7 +52,6 @@ class EventInfoUpdateView(UpdateView):
 
 
 class RegisterForParticipatesView(UpdateView):
-
     template_name = 'app/register_event_datas.html'
     form_class = forms.EventRegisterForParticipateForm
     model = models.Event
@@ -66,3 +65,31 @@ class RegisterForParticipatesView(UpdateView):
         event.save()
         return super().post(request, *args, **kwargs)
 
+
+# TODO 店舗エントリーページ（shop_entry）のためのView
+class ShopEntryView(CreateView):
+    template_name = "app/path/to"
+    form_class = forms.ShopEntryForm
+    model = models.Event
+
+    def get_success_url(self):
+        return reverse_lazy('event_info', kwargs={"pk": self.kwargs["pk"]})
+
+    """
+    Shopを生成しEventの参加店舗一覧に店舗名の文字列を追加する
+    """
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+
+# TODO 参加者エントリーページ（participate_entry）のためのView
+class ParticipateEntryView(UpdateView):
+    template_name = "app/path/to"
+    form_class = forms.ParticipateEntryForm
+    model = models.Event
+
+    """
+    ログインユーザ情報からEventのparticipating_usersにUserを追加する
+    """
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
