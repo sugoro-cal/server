@@ -8,8 +8,6 @@ from django.core.mail import send_mail
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-from server import settings
-
 import uuid as uuid_lib
 import os
 
@@ -21,7 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # username, full name
     username_validator = UnicodeUsernameValidator()
     username = models.CharField(
-        _('username'),
+        _('ユーザ名'),
         max_length=150,
         unique=True,
         help_text=_('Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.'),
@@ -30,15 +28,23 @@ class User(AbstractBaseUser, PermissionsMixin):
             'unique': _("A user with that username already exists."),
         }
     )
-    full_name = models.CharField(_('氏名'), max_length=150, blank=True)
+    full_name = models.CharField(
+        _('氏名'),
+        max_length=150,
+        null=True
+    )
 
     # email
-    email = models.EmailField(_('email address'), blank=True)
+    email = models.EmailField(
+        _('メールアドレス'),
+        help_text='メールアドレスを入力してください',
+        blank=True
+    )
 
     # image original
     original = models.ImageField(
         default=os.path.join("users", "dice.png"),
-        upload_to="media/"
+        upload_to="users/"
     )
 
     # bio, icon
@@ -72,7 +78,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     # env
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email', ]
+    REQUIRED_FIELDS = ['email']
 
     class Meta:
         verbose_name = _('user')

@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+    <head lang="ja">
+        <meta charset="utf-8">
+        <title>店舗募集用フォーム</title>
+    </head>
+    <body>
+        <h2>イベントの募集記事の情報を以下にご記入ください</h2>
+        <div class="table-view">
+            <form method="post" action="
+                {% if event %}
+                    {% url 'register_for_participates' event.id %}
+                {% else %}
+                    {% url 'register_for_shops' %}
+                {% endif %}
+            " enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" id="save" value="Save">
+            </form>
+        </div>
+    </body>
+</html>

@@ -6,16 +6,17 @@ from django.utils.translation import gettext, gettext_lazy as _
 User = get_user_model()
 
 
-# Register your models here.
 @admin.register(User)
-class AdminUserAdmin(UserAdmin):
+class UserAdmin(admin.ModelAdmin):
+    fields = [
+        'username',
+        'full_name',
+        'original',
+        'bio',
+    ]
+    list_display = [
+        'username',
+        'date_joined',
+        'is_staff'
+    ]
 
-    fieldsets = (
-        (None, {'fields': ('username', 'password')}),
-        (_('Personal info'), {'fields': ('full_name', 'email','departments')}),
-        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-    )
-    list_display = ('username', 'email', 'full_name', 'bio', 'original', 'is_staff')
-    search_fields = ('username', 'full_name', 'email')
-    filter_horizontal = ('groups', 'user_permissions')

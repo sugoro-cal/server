@@ -1,9 +1,39 @@
 {% extends 'base.html' %}
 
-{% block title %}
-    index
+{% load static %}
+
+{% block title %}index{% endblock %}
+
+{% block extended_css %}
+    <!--<link href="{% static 'css/index.css' %}" rel="stylesheet">-->
 {% endblock %}
 
 {% block content %}
-    <h2>index</h2>
+    <main>
+        <div id="item-area-list">
+            <div class="item-area" id="function">
+                {# <a href="#" class="btn">Joining Events</a> #}
+                {# <a href="event_create.html" class="btn">Registering</a> #}
+                {# <a href="Explain.html" class="btn">Explain Pages</a>#}
+            </div>
+            <div class="item-area" id="event">
+                <div id="slide">
+                    <h2>イベント</h2>
+                    <ul>
+                        {%  for event in events %}
+                            <li>
+                                <a href="{% url 'event_info' event.id %}">
+                                    {{ event.event_name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="map">
+
+        </div>
+    </main>
 {% endblock %}

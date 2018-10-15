@@ -3,29 +3,85 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>{% block title %}{% endblock title %}</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="{% static 'css/style.css' %}" rel="stylesheet">
-        <title>{% block title %}{% endblock title %}</title>
+        <!-- 追加css -->
+        {% block extended_css %}{% endblock %}
+
+        <!-- DEBUG用のStyle -->
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            #debug-footer ul li {
+                float: left;
+                margin-right: 20px;
+                list-style: none;
+            }
+            #debug-footer div {
+                height: 80px;
+            }
+            #debug-footer div > *.footer-child {
+                float: left;
+            }
+            #debug-footer {
+                padding-bottom: 30px;
+                margin-top: 30px;
+                background-color: lightskyblue;
+            }
+            img {
+                height: 80px;
+            }
+        </style>
     </head>
     <body>
-        {% if user.is_authenticated %}
-            <h1>{{ user.username }}</h1>
-        {% else %}
-            <h1>no user name</h1>
-        {%  endif %}
+
+        <header>
+            <div id="header-wrapper">
+                <a href="{% url 'index' %}" id="logo">
+                    <img src="{% static 'image/logo_clear_background.png' %}">
+                </a>
+                <form id="search">
+                    <!-- TODO: Django Formで置き換える-->
+                    <input type="text" >
+                    <input type="button" value="検索">
+                </form>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'profile' user.pk %}" id="user">
+                        <img src="{{ user.icon.url }}">
+                    </a>
+                {% endif %}
+            </div>
+        </header>
 
         {% block content %}{% endblock %}
 
-        <footer>
-            <a href="{% url 'index' %}">index</a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'profile' user.pk %}">profile</a>
-                <a href="{% url 'logout' %}">logout</a>
-            {% else %}
-                <a href="{% url 'signup' %}">signup</a>
-                <a href="{% url 'login' %}">login</a>
-            {% endif %}
+        <!-- DEBUG用のfooter -->
+        <footer id="debug-footer">
+            <div>
+                <h1 class="footer-child">DEBUG用footer</h1>
+                {% if user.is_authenticated %}
+                    <img src="{{ user.icon.url }}" class="footer-child">
+                    <h2 class="footer-child">ユーザーネーム: {{ user.username }}</h2>
+                {% else %}
+                    <h2 class="footer-child">No User is Logined</h2>
+                {% endif %}
+
+            </div>
+            <ul>
+                <li><a href="{% url 'index' %}">index</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'profile' user.pk %}">profile</a></li>
+                    <li><a href="{% url 'logout' %}">logout</a></li>
+                    <li><a href="{% url 'register_for_shops' %}">店舗募集用イベント登録ページ</a></li>
+                {% else %}
+                    <li><a href="{% url 'signup' %}">signup</a></li>
+                    <li><a href="{% url 'login' %}">login</a></li>
+                {% endif %}
+            </ul>
         </footer>
     </body>
 </html>

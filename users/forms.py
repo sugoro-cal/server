@@ -9,4 +9,9 @@ class ProfileUpdateForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ('username', 'bio')
+        fields = (
+            'username',
+            'full_name',
+            'bio',
+            'original'
+        )

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>{{ event.event_name }}</h2>
+
+    {% if event.registration_state == event.REGISTRATION_SHOPS %}
+
+        <p>イベント参加店舗募集中</p>
+        {% if event.host_user_id  == request.user.uuid %}
+            <a href="{% url 'register_for_participates' event.id %}">店舗募集を締め切り参加者募集を開始する</a>
+        {% elif request.user.is_authenticated %}
+            <a href="#">店舗を参加登録する</a>
+        {% else %}
+            <p>
+                <a href="{% url 'login' %}">ログイン</a>もしくは
+                <a href="{% url 'signup' %}">サインアップ</a>して参加登録しよう！
+            </p>
+        {% endif %}
+
+    {% elif event.registration_state == event.REGISTRATION_USERS %}
+
+        <p>イベント参加者募集中</p>
+        {% if event.host_user_id  == request.user.uuid %}
+            <a href="{% url 'register_for_participates' event.id %}">イベントの参加募集を締め切る</a>
+        {% elif request.user.is_authenticated %}
+            <a href="#">このイベントに参加登録する</a>
+        {% else %}
+            <p>
+                <a href="{% url 'login' %}">ログイン</a>もしくは
+                <a href="{% url 'signup' %}">サインアップ</a>して参加登録しよう！
+            </p>
+        {% endif %}
+
+    {% elif event.registration_state == event.FINISH_REGISTRATION %}
+
+        <p>イベント近日開催</p>
+        {% if event.host_user_id  == request.user.uuid %}
+            <p>イベント終了しましたか？</p>
+        {% endif %}
+
+    {% elif event.registration_state == event.EVENT_FINISHED %}
+
+        <p>イベント終了</p>
+
+    {% endif %}
+
+    <p>{{ event.event_content }}</p>
+{% endblock %}
