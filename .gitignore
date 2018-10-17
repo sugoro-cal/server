@@ -10,7 +10,4 @@ venv/
 # idea settings
 .idea/
 
-# media directory
-media/
-
 .vscode/
