@@ -34,8 +34,7 @@ class EventInfoView(DetailView):
         context.update({"year": year, "month": month, "day": day})
         context["IS_ABLE_MAKING_MAP_STATES"] = [
             event.REGISTRATION_USERS,
-            event.FINISH_REGISTRATION,
-            event.EVENT_FINISHED
+            event.FINISH_REGISTRATION
         ]
         return context
 
@@ -84,6 +83,16 @@ class RegisterParticipatesView(UpdateView):
         return super().post(request, *args, **kwargs)
 
 
+def finish_to_register_participates_view(request, pk):
+    if request.method == "GET":
+        return render(request, "app/finish_participate_entry.html", {"pk": pk})
+    else:
+        event = models.Event.objects.get(pk=pk)
+        event.registration_state = event.FINISH_REGISTRATION
+        event.save()
+        return redirect("app:event_info", pk=pk)
+
+
 class ShopEntryView(UpdateView):
     template_name = "app/shop_entry.html"
     form_class = forms.ShopEntryForm
@@ -124,7 +133,7 @@ class ShopEntryView(UpdateView):
                 event=event
             )
             shop.save()
-            event.participating_shops_text += (shop_name+"&")
+            event.participating_shops_text += (shop_name+"/")
             event.save()
             return redirect("app:event_info", event.id)
 

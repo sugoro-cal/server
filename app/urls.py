@@ -13,6 +13,11 @@ urlpatterns = [
         views.RegisterParticipatesView.as_view(),
         name='register_participates'
     ),
+    path(
+        'finish_participate_entry/<int:pk>/',
+        login_required(views.finish_to_register_participates_view),
+        name='finish_participate_entry'
+    ),
     path('shop_entry/<int:pk>/', login_required(views.ShopEntryView.as_view()), name='shop_entry'),
     path('participate_entry/<int:pk>/', login_required(views.participate_entry), name='participate_entry'),
 ]

@@ -1,0 +1,213 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    text-align: center;
+}
+
+.box4, .box5 {
+    float: left;
+}
+
+.box4 {
+    width: 48%;
+    padding-left: 2%;
+    padding-top: 30px;
+}
+
+.box5 {
+    width: 50%;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 5%;
+}
+
+.iconNow {
+    border-radius: 50%;
+    margin-top: 2%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 2%;
+}
+
+.iconEdit {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: black;
+    border: solid 2px black;
+    border-radius: 3px;
+    transition: .4s;
+    margin: 5px;
+}
+
+.iconEdit:active {
+    background: black;
+    color: white;
+}
+
+.simei {
+    width: 450px;
+    height: 40px;
+    font-size: 25px;
+}
+
+.nickname {
+    width: 450px;
+    height: 40px;
+    font-size: 25px;
+}
+
+.profileEdit {
+    width: 600px;
+    height: 300px;
+    font-size: 25px;
+}
+
+.cancel {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: black;
+    border: solid 2px black;
+    border-radius: 3px;
+    transition: .4s;
+    margin: 10px;
+}
+
+.cancel:active {
+    background: black;
+    color: white;
+}
+
+.allEdit {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: white;
+    border: solid 2px green;
+    border-radius: 3px;
+    transition: .4s;
+    margin: 10px;
+    background-color: green;
+}
+
+.allEdit:active {
+    background: white;
+    color: green;
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: green;
+    border: solid 2px green;
+    border-radius: 3px;
+    transition: .4s;
+    margin: 10px;
+}
+
+.last {
+    text-align: center;
+}
+
+
+main {
+    padding-bottom: 70px
+}
+
+.box1, .box2, .box3 {
+    float: left;
+    height: auto;
+}
+
+.box1 {
+    width: 25%;
+    background-color: yellow;
+    text-align: center;
+    height: 800px;
+}
+
+.box2 {
+    width: 50%;
+    background-color: green;
+}
+
+.box3 {
+    width: 25%;
+    background-color: aqua;
+}
+
+.icon {
+    border-radius: 50%;
+    margin-top: 5%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.user {
+    margin: 0;
+}
+
+p {
+    margin: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.3em 1em;
+    text-decoration: none;
+    color: #00BCD4;
+    border: solid 2px #00BCD4;
+    border-radius: 3px;
+    transition: .4s;
+    margin: 5px;
+}
+
+.button:active {
+    background: #00BCD4;
+    color: white;
+}
+
+.square_btn1 {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #67c5ff;
+    background: white;
+    transition: .4s;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.square_btn1:hover {
+    background: #67c5ff;
+    color: white;
+}
+
+.square_btn2 {
+    position: relative;
+    display: inline-block;
+    font-weight: bold;
+    padding: 0.25em 0.5em;
+    text-decoration: none;
+    color: #2E64FE;
+    background: white;
+    transition: .4s;
+    margin: 5%;
+}
+
+.square_btn2:hover {
+    background: #2e64fe;
+    color: white;
+}
+
+footer {
+    margin-top: 730px;
+}

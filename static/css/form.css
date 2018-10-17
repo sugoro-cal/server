@@ -1,0 +1,93 @@
+html, body, div, p, table, tr, th, td, form, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    border: none;
+}
+
+body {
+    font-family: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+}
+
+.table-view {
+    width: 620px;
+}
+
+li {
+    list-style: none;
+}
+
+table {
+    width: 100%;
+    margin: 0 0 12px;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,
+td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    width: 180px;
+    background: #eee;
+    font-weight: normal;
+}
+
+th span {
+    font-size: 12px;
+}
+
+th .ind {
+    color: #f00;
+    font-size: 14px;
+}
+
+td {
+    background: #fff;
+}
+
+td input {
+    width: 250px;
+}
+
+td textarea {
+    width: 450px;
+}
+
+div > input {
+    width: 80px;
+    margin-bottom: 5px;
+}
+
+#Notes {
+    color: red;
+}
+
+div small {
+    float: right;
+}
+
+input[type="submit"] {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.errorMsg {
+    display: block;
+    color: #f00;
+}
+
+.errorInput {
+    background: #fcf0f2;
+}
+
+#formShop {
+    width: 450px;
+}

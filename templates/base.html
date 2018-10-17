@@ -31,10 +31,17 @@
                 </div>
             </header>
 
+            {% block align-empty %}<div id="align-empty"></div>{% endblock %}
+
             {% block content %}{% endblock %}
+
             <footer>
-                <p>お問い合わせ（developer)~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</p>
+                <p>お問い合わせ（developer)</p>
                 <a href={% url 'index' %}>Topへ</a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'login' %}">ログインする</a>
+                    <a href="{% url 'signup' %}">サインアップする</a>
+                {% endif %}
             </footer>
         </div>
     </body>

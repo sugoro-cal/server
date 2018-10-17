@@ -1,19 +1,29 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}
     {{ user.username }}
 {% endblock %}
 
 {% block content %}
-    <a href="{% url "change_profile" user.pk %}">プロフィールを編集する</a>
     <main>
         <div class="box1">
-            <img src="{{ user.icon.url }}">
-            <h1>{{ user.username }}</h1>
-            <h2>{{ user.full_name }}</h2>
+            <img src="{{ user.icon.url }}" width="200" height="200" class="icon">
+            <h1 class="user">{{ user.username }}</h1>
             <p>{{ user.bio }}</p>
+            <div><a href="{% url "change_profile" user.pk %}" class="button">プロフィールを編集する</a></div>
+            <div><a href="https://twitter.com/intent/tweet?url=みんなも自分の街を舞台にすごろくを楽しもう！" class="square_btn1">twitterで共有</a></div>
         </div>
-        <div class="box2">参加状況</div>
-        <div class="box3">履歴・アンケート</div>
+        <div class="box2">参加状況
+            <div></div>
+        </div>
+        <div class="box3">履歴
+            <div></div>
+        </div>
     </main>
 {% endblock content %}

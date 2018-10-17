@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html>
+    <body>
+        <h2>参加者の募集を締め切る</h2>
+        <form method="post" action="{% url 'app:finish_participate_entry' pk %}">
+            {% csrf_token %}
+            <input type="submit" value="締め切る">
+        </form>
+    </body>
+</html>

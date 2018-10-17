@@ -110,11 +110,6 @@ main {
     height: 580px;
 }
 
-ul,
-li {
-    list-style: none;
-}
-
 a {
     text-decoration: none;
 }

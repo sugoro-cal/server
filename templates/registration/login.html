@@ -1,28 +1,37 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Login{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'css/login.css' %}" />
+{% endblock %}
+
 {% block content %}
-<h1>Login</h1>
-<section class="common-form">
-    {% if form.errors %}
-    <p class="error-msg">Your username and password didn't match. Please try again.</p>
-    {% endif %}
+    <div class="Loginform">
+        <h3>すごろーかるにログイン</h3>
 
-    {% if next %}
-    {% if user.is_authenticated %}
-    <p class="error-msg">Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.</p>
-    {% else %}
-    <p class="error-msg">Please login to see this page.</p>
-    {% endif %}
-    {% endif %}
+        {% if form.errors %}
+        <p class="error-msg">ユーザ名とパスワードが不一致です もう一度入力してください</p>
+        {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="submit">Login</button>
-        <input type="hidden" name="next" value="{{ next }}"/>
-    </form>
-</section>
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p class="error-msg">このページにはアクセスできません 別のアカウントでアクセスし直してください</p>
+        {% else %}
+        <p class="error-msg">ログインしてください</p>
+        {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table id="login-table">
+                {{ form.as_table }}
+            </table>
+            <button type="submit" id="Login-Sub" class="submit">Login</button>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <a href="{% url 'signup' %}"><p id="newRegist">新規登録はこちら</p></a>
+        </form>
+    </div>
 {% endblock %}

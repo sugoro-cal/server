@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
-    <h2>Update Your Profile</h2>
+    <h2>プロフィールを編集する</h2>
     <form method="POST" enctype="multipart/form-data" action="{% url 'change_profile' user.pk %}">
         {% csrf_token %}
-        <p>{{ form.username }}</p>
-        <p>{{ form.full_name }}</p>
-        <img src="{{ user.icon.url }}">
-        <p>{{ form.original }}</p>
-        <p>{{ form.bio }}</p>
+
+        <div class="box4">
+            <h3>ニックネーム</h3><p>{{ form.username }}</p>
+            <h3>氏名</h3><p>{{ form.full_name }}</p>
+            <h3>プロフィール</h3><p>{{ form.bio }}</p>
+        </div>
+        <div class="box5">
+            <h2>現在のアイコン</h2>
+            <img src="{{ user.bigicon.url }}" width="400px" height="400px" class="iconNow">
+            <div><p>{{ form.original }}</p></div>
+        </div>
         <input type="submit" id="save" value="Save">
     </form>
 {% endblock %}

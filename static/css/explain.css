@@ -1,0 +1,33 @@
+h2{
+    text-align: center;
+}
+body{
+    background-color: #ffacac60;
+}
+h4{
+    text-align: center;
+}
+ul{
+    list-style: none;
+    text-align: center;
+}
+h3{
+    margin-left:10%;
+}
+#Index{
+   margin: 5%;
+   border: 1px solid rgb(0, 128, 255);
+   background-color: #acbbff60;
+}
+.On_Browser{
+    background-color: #fffea960;
+    border: 1px solid #85ffc6;
+    padding: 2%;
+    margin: 0 7%;
+}
+.On_CellPhone{
+    background-color: #fffea960;
+    border: 1px solid #85ffc6;
+    padding: 2%;
+    margin: 0 7%;
+}

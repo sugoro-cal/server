@@ -16,8 +16,7 @@ header {
     color: white;
 }
 
-#logo,
-#search {
+#logo, #search {
     float: left;
 }
 
@@ -129,10 +128,23 @@ footer p, footer a, footer a:visited {
     color: white;
 }
 
+body {
+    margin-left: 0px;
+}
+
 .container{
+    margin-left: 0px;
     position: relative;
     width: 100%;
     height: auto;
     !important; height: 100%;
     min-height: 100%;
+}
+
+#align-empty {
+    height: 80px;
+}
+
+ul, li {
+    list-style: none;
 }

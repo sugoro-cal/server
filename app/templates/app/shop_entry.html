@@ -1,19 +1,30 @@
-<!DOCTYPE HTML>
-<html>
-    <body>
-        <h2>店舗をイベントに登録する</h2>
-        <form method="post" action="{% url 'app:shop_entry' event.id %}">
-            {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
-            {% if name_valid_mess %}
-                <p>{{ name_valid_mess }}</p>
-            {% endif %}
-            {% if mail_valid_mess %}
-                <p>{{ mail_valid_mess }}</p>
-            {% endif %}
-            <input type="submit" value="submit">
-        </form>
-    </body>
-</html>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}店舗情報を登録する{% endblock %}
+
+{% block content %}
+    <main>
+        <h2>店舗情報を以下に登録してください</h2>
+        <div class="table-view">
+            <form method="post" action="{% url 'app:shop_entry' event.id %}">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                {% if name_valid_mess %}
+                    <p>{{ name_valid_mess }}</p>
+                {% endif %}
+                {% if mail_valid_mess %}
+                    <p>{{ mail_valid_mess }}</p>
+                {% endif %}
+                <input type="submit" value="登録する">
+            </form>
+        </div>
+    </main>
+{% endblock %}

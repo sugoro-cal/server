@@ -8,6 +8,7 @@
         <div class="event" id="event_Name">
             <h2>{{ event.event_name }}</h2>
         </div>
+
         {% include 'app/event_state.html' %}
         <div class="event" id="event_Day">
             <p>開催日時:{{ year }}年{{ month }}月{{ day }}日</p>
@@ -18,16 +19,16 @@
         <div class="event" id="event_Explain">
             <p>イベントの内容:{{ event.event_content }}</p>
         </div>
-        <div class="event" id="join_Shop">
-            {% if shops %}
-                <h2>参加店舗一覧</h2>
+        {% if shops %}
+            <div class="event" id="join_Shop">
+                <h3>参加店舗一覧</h3>
                 <ul>
                     {% for shop in shops %}
                         <li>{{ shop.shop_name }}</li>
                     {% endfor %}
                 </ul>
-            {% endif %}
-        </div>
+            </div>
+        {% endif %}
         {% if event.original %}
             <div class="event" id="up_Img">
                 <img src="{{ event.posted.url }}" alt="イベント関連画像" width="400px" height="300px">

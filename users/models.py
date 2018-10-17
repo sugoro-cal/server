@@ -55,6 +55,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         format="JPEG",
         options={'quality': 60}
     )
+    bigicon = ImageSpecField(
+        source='original',
+        processors=[ResizeToFill(500, 500)],
+        format="JPEG",
+        options={'quality': 90}
+    )
 
     # is staff, is active (boolean), and date joined
     is_staff = models.BooleanField(

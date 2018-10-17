@@ -1,10 +1,21 @@
-<!DOCTYPE HTML>
-<html>
-    <body>
-        <h2>イベントに参加登録する</h2>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}イベントに参加する{% endblock %}
+
+{% block content %}
+    <main>
+        <h2>イベントに参加する</h2>
+        <div class="table-view">
         <form method="post" action="{% url 'app:participate_entry' pk %}">
             {% csrf_token %}
-            <input type="submit" value="submit">
+            <input type="submit" value="参加する">
         </form>
-    </body>
-</html>
+        </div>
+    </main>
+{% endblock %}

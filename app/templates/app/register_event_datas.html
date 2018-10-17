@@ -1,25 +1,24 @@
-<!doctype html>
-<html>
-    <head lang="ja">
-        <meta charset="utf-8">
-        <title>店舗募集用フォーム</title>
-    </head>
-    <body>
-        <h2>イベントの募集記事の情報を以下にご記入ください</h2>
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}イベントの{% if event %}参加者向け{% else %}店舗向け{% endif %}募集情報を登録する{% endblock %}
+
+{% block content %}
+    <main>
+        <h2>イベントの{% if event %}参加者{% else %}店舗{% endif %}募集情報を以下に登録してください</h2>
         <div class="table-view">
-            <form method="post" action="
-                {% if event %}
-                    {% url 'app:register_participates' event.id %}
-                {% else %}
-                    {% url 'app:register_shops' %}
-                {% endif %}
-            " enctype="multipart/form-data">
+            <form method="post" action="{% if event %}{% url 'app:register_participates' event.id %}{% else %}{% url 'app:register_shops' %}{% endif %}" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                 </table>
-                <input type="submit" value="Save">
+                <input type="submit" value="登録する">
             </form>
         </div>
-    </body>
-</html>
+    </main>
+{% endblock %}

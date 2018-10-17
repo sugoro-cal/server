@@ -4,7 +4,13 @@
             {% if event.registration_state == event.REGISTRATION_SHOPS %}
                 <li>
                     <a href="{% url 'app:register_participates' event.id %}" class="select_btn">
-                        <i class="fa fa-chevron-right" id="candidates">イベント参加者募集ページ作成</i>
+                        <i class="fa fa-chevron-right" id="candidates">店舗の募集を締め切り参加者募集ページを作成する</i>
+                    </a>
+                </li>
+            {% elif event.registration_state == event.REGISTRATION_USERS %}
+                <li>
+                    <a href="{% url 'app:finish_participate_entry' event.id %}" class="select_btn">
+                        <i class="fa fa-chevron-right" id="candidates">参加者の募集を締め切る</i>
                     </a>
                 </li>
             {% endif %}
@@ -15,6 +21,30 @@
                     </a>
                 </li>
             {% endif %}
+        </ul>
+    </div>
+{% elif request.user.is_authenticated %}
+    <div class="list-btn">
+        <ul>
+            {% if event.registration_state == event.REGISTRATION_SHOPS %}
+                <li>
+                    <a href="{% url 'app:shop_entry' event.id %}" class="select_btn">
+                        <i class="fa fa-chevron-right" id="candidates">店舗を登録する</i>
+                    </a>
+                </li>
+            {% elif event.registration_state == event.REGISTRATION_USERS %}
+                <li>
+                    <a href="{% url 'app:participate_entry' event.id %}" class="select_btn">
+                        <i class="fa fa-chevron-right" id="candidates">参加する</i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% else %}
+    <div class="list-btn">
+        <ul>
+            <li><a href="{% url 'login' %}">ログイン</a>もしくは<a href="{% url 'signup' %}">サインアップ</a>してください</li>
         </ul>
     </div>
 {% endif %}
