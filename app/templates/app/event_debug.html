@@ -1,0 +1,7 @@
+<ul>
+    <li><a href="{% url 'app:event_info' event.id %}">event_info</a></li>
+    <li><a href="{% url 'app:register_shops' %}">register_shops</a></li>
+    <li><a href="{% url 'app:register_participates' event.id %}">register_participates</a></li>
+    <li><a href="{% url 'app:shop_entry' event.id %}">shop_entry</a></li>
+    <li><a href="{% url 'app:participate_entry' event.id %}">participate_entry</a></li>
+</ul>

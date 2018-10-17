@@ -9,16 +9,16 @@
         <div class="table-view">
             <form method="post" action="
                 {% if event %}
-                    {% url 'app:register_for_participates' event.id %}
+                    {% url 'app:register_participates' event.id %}
                 {% else %}
-                    {% url 'app:register_for_shops' %}
+                    {% url 'app:register_shops' %}
                 {% endif %}
             " enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                 </table>
-                <input type="submit" id="save" value="Save">
+                <input type="submit" value="Save">
             </form>
         </div>
     </body>

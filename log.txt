@@ -1,1 +1,1 @@
-goodbyee vs goodbyee
+{'form': <ShopEntryForm bound=True, valid=True, fields=(delegation_name;shop_name;shop_address;shop_mail)>, 'pk': 34, 'mail_valid_mess': '同じメールアドレスの店舗がすでに登録されています'}

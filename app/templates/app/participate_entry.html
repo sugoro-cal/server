@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html>
+    <body>
+        <h2>イベントに参加登録する</h2>
+        <form method="post" action="{% url 'app:participate_entry' pk %}">
+            {% csrf_token %}
+            <input type="submit" value="submit">
+        </form>
+    </body>
+</html>

@@ -1,0 +1,10 @@
+<ul>
+    <li><a href="{% url 'index' %}">index</a></li>
+    {% if user.is_authenticated %}
+        <li><a href="{% url 'profile' user.pk %}">profile</a></li>
+        <li><a href="{% url 'logout' %}">logout</a></li>
+    {% else %}
+        <li><a href="{% url 'login' %}">login</a></li>
+        <li><a href="{% url 'signup' %}">signup</a></li>
+    {% endif %}
+</ul>

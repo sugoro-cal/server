@@ -20,7 +20,6 @@ class Event(models.Model):
         (FINISH_REGISTRATION, "FINISH_REGISTRATION"),
         (EVENT_FINISHED, "EVENT_FINISHED"),
     )
-
     # state for registering
     registration_state = models.CharField(
         max_length=2,
@@ -52,6 +51,12 @@ class Event(models.Model):
         format="JPEG",
         options={'quality': 80},
     )
+    slide = ImageSpecField(
+        source='original',
+        processors=[ResizeToFill(300, 350)],
+        format="JPEG",
+        options={'quality': 70},
+    )
 
     # participating users, host user
     participating_users = models.ManyToManyField(User, blank=True, related_name="participating_users")
@@ -68,18 +73,19 @@ class Shop(models.Model):
     )
     shop_name = models.CharField(
         _("店舗名"),
-        max_length=63
+        max_length=63,
     )
-    address = models.CharField(
+    shop_address = models.CharField(
         _("店舗住所"),
         max_length=63
     )
-    mail = models.EmailField(
+    shop_mail = models.EmailField(
         _("店舗メールアドレス"),
         blank=True
     )
     event = models.ForeignKey(
         Event,
         on_delete=models.PROTECT,
+        related_name='registration_shops',
         null=True
     )

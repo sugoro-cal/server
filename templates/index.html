@@ -2,38 +2,116 @@
 
 {% load static %}
 
-{% block title %}index{% endblock %}
+{% block css %}
+    <link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock %}
 
-{% block extended_css %}
-    <!--<link href="{% static 'css/index.css' %}" rel="stylesheet">-->
+{% block index-init %}
+    onload="init()"
 {% endblock %}
 
 {% block content %}
     <main>
         <div id="item-area-list">
             <div class="item-area" id="function">
-                {# <a href="#" class="btn">Joining Events</a> #}
-                {# <a href="event_create.html" class="btn">Registering</a> #}
-                {# <a href="Explain.html" class="btn">Explain Pages</a>#}
+                <a href="{% url 'app:register_shops' %}" class="btn">
+                    <i class="event-btn"></i>
+                    <span>Registering</span>
+                </a>
+                <a href="{% url 'explain' %}" class="btn">
+                    <i class="event-btn"></i>
+                    <span>Explain Pages</span>
+                </a>
             </div>
             <div class="item-area" id="event">
                 <div id="slide">
-                    <h2>イベント</h2>
+                    <!-- Eventの広告を貼る -->
                     <ul>
-                        {%  for event in events %}
-                            <li>
-                                <a href="{% url 'app:event_info' event.id %}">
-                                    {{ event.event_name }}
-                                </a>
-                            </li>
+                        {% for event in events %}
+                            {% if event.original %}
+                                <li>
+                                    <a href="{% url 'app:event_info' event.id %}">
+                                        <img src="{{ event.slide.url }}" alt="" width="300" height="350px"/>
+                                    </a>
+                                </li>
+                            {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
             </div>
         </div>
-
-        <div id="map">
-
-        </div>
+        <div id="map"></div>
     </main>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJRbNVzET0bkE6-cVZ4bE-HSZGKw1aM7U"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <script>
+        var map;
+        var geo;
+
+        //データベースから以下の配列に格納
+        var place = [{% for event in events %}"{{ event.address }}",{% endfor %}]; //場所を格納
+        var event_name = [{% for event in events %}"{{ event.event_name }}",{% endfor %}]; //イベント名を格納
+        var href = [{% for event in events %}"{% url 'app:event_info' event.id %}",{% endfor %}]; //イベントの詳細ページへのurlを格納
+
+        //初期設定
+        function init() {
+            //マップの中心地（東京）の位置データを格納
+            var latlng_center = new google.maps.LatLng(35.658581, 139.745433);
+            var opts = {
+                zoom: 5,
+                center: latlng_center,
+                mapTypeId: google.maps.MapTypeId.ROADMAP,
+            };
+            map = new google.maps.Map(document.getElementById("map"), opts);
+            geo = new google.maps.Geocoder();
+            for (var i = 0; i < place.length; i++) {
+                setMarker({
+                    place: place[i],
+                    name: event_name[i],
+                    href: href[i]
+                });
+            }
+
+        }
+
+        //住所を座標に変換してマーカーを設定
+        function setMarker(data) {
+            geo.geocode({
+                    address: data.place,
+                    language: "ja"
+                },
+                function(result, status) {
+                    if (status != google.maps.GeocoderStatus.OK) {
+                        console.log(status + ":" + "入力データ:" + data.place + "は有効にできませんでした"); //ジオコードに変換できなかった時のコンソール出力
+                        return;
+                    }
+
+                    var latlng = result[0].geometry.location;
+
+                    //情報ウィンドウの設定
+                    var infoContent = document.createElement('div');
+                    //情報ウィンドウ表示するHTML
+                    infoContent.innerHTML = '<div class="infoWindow"><div class="inner"><div class="header"><h3>' + data.name + '</h3></div><div class="container">' + data.place + '</div><div class="footer"><a href=' + data.href + '><input type="button" class="join-button" value="このイベントの詳細へ"></a></div></div></div>';
+
+                    var infoOptions = {
+                        content: infoContent,
+                        disableAutoPan: false,
+                        zIndex: null,
+                    };
+                    var infoWindow = new google.maps.InfoWindow(infoOptions);
+
+                    var marker = new google.maps.Marker({
+                        position: latlng,
+                        map: map
+                    });
+
+                    marker.addListener('click', function() { // マーカーをクリックしたときのイベント設定
+                        infoWindow.open(map, marker); // 情報ウィンドウの表示
+                    });
+
+                });
+        }
+
+    </script>
 {% endblock %}

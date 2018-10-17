@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from django.views.generic import CreateView, UpdateView, DetailView
+from django.views.generic import (
+    CreateView, UpdateView, DetailView
+)
 from django.urls import reverse_lazy
 
 from . import models, forms
@@ -12,17 +14,33 @@ def index(request):
     return render(request, 'index.html', param)
 
 
+def explain(request):
+    return render(request, 'explain.html')
+
+
+def error_404(request):
+    return render(request, '404.html', status=404)
+
+
 class EventInfoView(DetailView):
     model = models.Event
     template_name = "app/event_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["items"] = self.request.GET
+        event = kwargs["object"]
+        context["shops"] = models.Shop.objects.filter(event_id=event.id)
+        year, month, day = str(event.date).split("-")
+        context.update({"year": year, "month": month, "day": day})
+        context["IS_ABLE_MAKING_MAP_STATES"] = [
+            event.REGISTRATION_USERS,
+            event.FINISH_REGISTRATION,
+            event.EVENT_FINISHED
+        ]
         return context
 
 
-class RegisterForShopsView(CreateView):
+class RegisterShopsView(CreateView):
     template_name = "app/register_event_datas.html"
     form_class = forms.EventRegisterForShopForm
 
@@ -38,7 +56,7 @@ class RegisterForShopsView(CreateView):
                 host_user=request.user
             )
             event.save()
-            return redirect("event_info", event.id)
+            return redirect("app:event_info", event.id)
         return render(request, self.template_name, {'form': form})
 
 
@@ -48,16 +66,16 @@ class EventInfoUpdateView(UpdateView):
     model = models.Event
 
     def get_success_url(self):
-        return reverse_lazy("event_info", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy("app:event_info", kwargs={"pk": self.kwargs["pk"]})
 
 
-class RegisterForParticipatesView(UpdateView):
+class RegisterParticipatesView(UpdateView):
     template_name = 'app/register_event_datas.html'
     form_class = forms.EventRegisterForParticipateForm
     model = models.Event
 
     def get_success_url(self):
-        return reverse_lazy("event_info", kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy("app:event_info", kwargs={"pk": self.kwargs["pk"]})
 
     def post(self, request, *args, **kwargs):
         event = self.get_object()
@@ -66,30 +84,58 @@ class RegisterForParticipatesView(UpdateView):
         return super().post(request, *args, **kwargs)
 
 
-# TODO 店舗エントリーページ（shop_entry）のためのView
-class ShopEntryView(CreateView):
-    template_name = "app/path/to"
+class ShopEntryView(UpdateView):
+    template_name = "app/shop_entry.html"
     form_class = forms.ShopEntryForm
     model = models.Event
 
     def get_success_url(self):
-        return reverse_lazy('event_info', kwargs={"pk": self.kwargs["pk"]})
+        return reverse_lazy('app:event_info', kwargs={"pk": self.kwargs["pk"]})
 
-    """
-    Shopを生成しEventの参加店舗一覧に店舗名の文字列を追加する
-    """
     def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+        event = self.model.objects.get(pk=self.kwargs["pk"])
+        form = self.form_class(data=request.POST)
+        param = {'form': form, 'pk': event.id}
+
+        if form.is_valid():
+            shop_name = form.cleaned_data.get('shop_name')
+            shop_mail = form.cleaned_data.get('shop_mail')
+            shops_name_valid = models.Shop.objects.filter(
+                event_id=event.id,
+                shop_name=shop_name,
+            )
+            shops_mail_valid = models.Shop.objects.filter(
+                event_id=event.id,
+                shop_mail=shop_mail,
+            )
+
+            if shops_name_valid:
+                param['name_valid_mess'] = '同じ名前の店舗がすでに登録されています'
+                return render(request, self.template_name, param)
+            if shops_mail_valid:
+                param['mail_valid_mess'] = '同じメールアドレスの店舗がすでに登録されています'
+                return render(request, self.template_name, param)
+
+            shop = models.Shop(
+                delegation_name=form.cleaned_data.get('delegation_name'),
+                shop_name=shop_name,
+                shop_address=form.cleaned_data.get('shop_address'),
+                shop_mail=form.cleaned_data.get('shop_mail'),
+                event=event
+            )
+            shop.save()
+            event.participating_shops_text += (shop_name+"&")
+            event.save()
+            return redirect("app:event_info", event.id)
+
+        return render(request, self.template_name, param)
 
 
-# TODO 参加者エントリーページ（participate_entry）のためのView
-class ParticipateEntryView(UpdateView):
-    template_name = "app/path/to"
-    form_class = forms.ParticipateEntryForm
-    model = models.Event
-
-    """
-    ログインユーザ情報からEventのparticipating_usersにUserを追加する
-    """
-    def post(self, request, *args, **kwargs):
-        return super().post(request, *args, **kwargs)
+def participate_entry(request, pk):
+    if request.method == "GET":
+        return render(request, "app/participate_entry.html", {"pk": pk})
+    else:
+        user = request.user
+        event = models.Event.objects.get(pk=pk)
+        event.participating_users.add(user)
+        return redirect("app:event_info", pk=pk)

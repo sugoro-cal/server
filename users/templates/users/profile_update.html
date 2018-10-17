@@ -4,8 +4,11 @@
     <h2>Update Your Profile</h2>
     <form method="POST" enctype="multipart/form-data" action="{% url 'change_profile' user.pk %}">
         {% csrf_token %}
+        <p>{{ form.username }}</p>
+        <p>{{ form.full_name }}</p>
         <img src="{{ user.icon.url }}">
-        {{ form.as_p }}
+        <p>{{ form.original }}</p>
+        <p>{{ form.bio }}</p>
         <input type="submit" id="save" value="Save">
     </form>
 {% endblock %}

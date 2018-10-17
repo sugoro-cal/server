@@ -131,6 +131,7 @@ AUTH_USER_MODEL = 'users.User'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+
 # My Settings
 
 INSTALLED_APPS += [
@@ -138,6 +139,8 @@ INSTALLED_APPS += [
     'app',
     'users',
 ]
+
+#DEBUG = False
 
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1',)
