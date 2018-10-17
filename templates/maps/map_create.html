@@ -1,22 +1,17 @@
-<!--この前に1段階、店舗を入れるHTMLがいる-->
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-    <script src="jquery-3.3.1.min.js" type="text/javascript"></script>
-    <script src="data.json"></script>
-    <!--データベースのjsonファイル-->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"></script>
-    <link href="Map_create.css" rel="stylesheet">
+    <link href="{% static 'css/map_create.css' %}" rel="stylesheet">
     <title>Map Create</title>
 </head>
 
 <body>
-    <p>
-        生成したマップは以下の通りです<br> これでよろしい場合はOKボタンをクリックしてください
-    </p>
-    <a href="Registration_Done.html"><input type="button" id="ok_btn" value="OK"></a>
     <div id="map"></div>
 
     <script>
