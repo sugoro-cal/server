@@ -20,10 +20,20 @@
             <div><a href="https://twitter.com/intent/tweet?url=みんなも自分の街を舞台にすごろくを楽しもう！" class="square_btn1">twitterで共有</a></div>
         </div>
         <div class="box2">参加状況
-            <div></div>
+            <div>
+                {% for event in user.participating_users.all %}
+                    <a href="{% url 'app:event_info' event.id %}">{{ event.event_name }}</a><br>
+                {% endfor %}
+            </div>
         </div>
         <div class="box3">履歴
-            <div></div>
+            <div>
+                {% for event in user.participating_users.all %}
+                    {% if event.registation_state == event.EVENT_FINISHED %}
+                        <a href="{% url 'app:event_info' event.id %}">{{ event.event_name }}</a><br>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </main>
 {% endblock content %}
